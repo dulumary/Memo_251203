@@ -1,6 +1,7 @@
 package com.marondal.memo.user.service;
 
 import com.marondal.memo.common.MD5HashingEncoder;
+import com.marondal.memo.user.domain.User;
 import com.marondal.memo.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-
 
 //    @Autowired
     // 클래스내에 생성자가 의존성 주입을 위한 생성자가 유일한 경우 @Autowired 생각 가능
@@ -34,4 +34,14 @@ public class UserService {
         }
 
     }
+
+    public User getUser(String loginId, String password) {
+
+        String encodedPassword = MD5HashingEncoder.encode(password);
+
+        User user = userRepository.selectUser(loginId, encodedPassword);
+
+        return user;
+    }
+
 }
