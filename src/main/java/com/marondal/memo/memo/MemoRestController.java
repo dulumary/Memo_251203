@@ -27,7 +27,7 @@ public class MemoRestController {
             , HttpSession session) {
 
         // 로그인한 사용자의 PK
-        long userId = (Long) session.getAttribute("userId");
+        long userId = (Long)session.getAttribute("userId");
 
         Map<String, String> resultMap = new HashMap<>();
         if (memoService.createMemo(userId, title, contents)) {

@@ -3,7 +3,11 @@ package com.marondal.memo.memo.service;
 import com.marondal.memo.memo.domain.Memo;
 import com.marondal.memo.memo.repository.MemoRepository;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemoService {
@@ -30,6 +34,16 @@ public class MemoService {
 
         return true;
 
+    }
+
+    public List<Memo> getMemoList(long userId) {
+        return memoRepository.findByUserId(userId, Sort.by("id").descending());
+    }
+
+    public Memo getMemo(long id) {
+        Optional<Memo> optionalMemo = memoRepository.findById(id);
+
+        return optionalMemo.get();
     }
 
 }
