@@ -10,8 +10,11 @@ public class MemoController {
 
     @GetMapping("/list")
     public String list() {
-
-
         return "memo/list";
+    }
+
+    @GetMapping("/write")
+    public String writeForm() {
+        return "memo/form";
     }
 }
