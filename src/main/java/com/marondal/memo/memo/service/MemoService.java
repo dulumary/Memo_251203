@@ -1,10 +1,12 @@
 package com.marondal.memo.memo.service;
 
+import com.marondal.memo.common.FileManager;
 import com.marondal.memo.memo.domain.Memo;
 import com.marondal.memo.memo.repository.MemoRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +20,20 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public boolean createMemo(long userId, String title, String contents) {
+    public boolean createMemo(
+            long userId
+            , String title
+            , String contents
+            , MultipartFile imageFile) {
+
+        String imagePath = FileManager.saveFile(userId, imageFile);
 
         Memo memo = Memo.builder()
                 .userId(userId)
                 .title(title)
                 .contents(contents)
-                .build();
+                .imagePath(imagePath)
+                .build(); 
 
         try{
             memoRepository.save(memo);
